@@ -6,7 +6,9 @@
     <test name="Product">
         <parameter name="browser" value="chrome"/>
         <classes>
+            <class name="dashboard.InitProduct"/>
             <class name="dashboard.Product_TC1"/>
+            <class name="dashboard.Product_TC2"/>
         </classes>
     </test>
 </suite>

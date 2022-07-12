@@ -12,9 +12,10 @@ public class ProductPageObjects {
     By addButton = By.xpath("//button[text()='Add']");
     By submitButton = By.id("submit");
     By cancelButton = By.id("cancel");
-    By cardItems = By.className("MuiAvatar-circular");
+    By cardItems = By.cssSelector("[data-test=carditem]");
     By chipTotal = By.className("MuiChip-root");
     By firstProduct = By.xpath("(//button[@data-test='product'])[1]");
+    By firstProductVariants = By.xpath("(//button[@data-test='variants'])[1]");
 
     public ProductPageObjects(WebDriver driver) {
         this.driver = driver;
@@ -47,5 +48,9 @@ public class ProductPageObjects {
 
     public void openEditProductModal() {
         driver.findElement(firstProduct).click();
+    }
+
+    public void openAddOptionsModal() {
+        driver.findElement(firstProductVariants).click();
     }
 }
