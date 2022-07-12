@@ -20,16 +20,22 @@ public class Product_TC1 {
 
     @BeforeTest
     @Parameters({"browser", "url"})
-    void setup(String browser, String url) {
-        if (browser.equals("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
+    void setup(String browser, String baseUrl) {
+        // testing with only chrome and firefox
+        switch (browser) {
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            default:
+                throw new RuntimeException("unidentified browser");
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(url);
+        driver.get(baseUrl + "/#/products");
         productPageObjects = new ProductPageObjects(driver);
     }
 
@@ -40,9 +46,27 @@ public class Product_TC1 {
     }
 
     @Test
-    void confirmAddProductModal() throws InterruptedException {
-        WebElement submitButton = productPageObjects.openAddProductModal();
+    void confirmAddProductModal() {
+        productPageObjects.openAddProductModal();
+        WebElement submitButton = productPageObjects.getSubmitButton();
         Assert.assertTrue(submitButton.isDisplayed());
+        productPageObjects.getCancelButton().click();
+    }
+
+    @Test
+    void confirmProductTotals() {
+        int totalItems = productPageObjects.getTotalProductItems();
+        int chipTotal = productPageObjects.getChipTotal();
+        Assert.assertEquals(totalItems, chipTotal);
+    }
+
+    @Test
+    void confirmEditProductModal() throws InterruptedException {
+        productPageObjects.openEditProductModal();
+        Thread.sleep(1000);
+        WebElement submitButton = productPageObjects.getSubmitButton();
+        Assert.assertTrue(submitButton.isDisplayed());
+        productPageObjects.getCancelButton().click();
         Thread.sleep(1000);
     }
 

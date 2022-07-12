@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="DashboardSuite">
-    <parameter name="url" value="http://localhost:3000/#/products"/>
+    <parameter name="url" value="http://localhost:3000"/>
 
     <test name="Product">
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="dashboard.Product_TC1"/>
         </classes>
